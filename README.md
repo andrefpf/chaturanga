@@ -4,7 +4,7 @@ Chaturanga é um jogo composto por dois jogadores, um tabuleiro 8x8 e 16 peças 
 As 16 peças compõem um exército e se dividem em oito Padati, dois Ratha, dois Ashwa, dois Gaja, um Mitri e um Raja.
 
 A distribuição do exército no tabuleiro para o início da partida se dá como na seguinte imagem: 
-![Initial Board](imgs/initial_board.png)
+<img src="imgs/initial_board.png" width="400"/>
 
 ## Regras
 
@@ -17,22 +17,28 @@ A cada turno, o jogador escolhe uma peça que controla e a move para alguma casa
 As regras de movimento para cada peça são as seguintes:
 
 - Padati (Soldado): anda uma casa diretamente para frente ou, no caso de existir uma peça inimiga na sua diagonal direta, captura uma peça inimiga em sua diagonal direta. 
-![Padati](imgs/padati_moves.png)
+
+<img src="imgs/padati_moves.png" width="200"/>
 
 - Ratha (Carruagem): anda em movimento ortogonal ao tabuleiro, ou seja, tanto para frente/trás quanto para esquerda/direita e se move quantas casas forem desejadas.
-![Ratha](imgs/ratha_moves.png)
+
+<img src="imgs/ratha_moves.png" width="200"/>
 
 - Ashwa (Cavalo): anda imediatamente na diagonal oposta de um retângulo 3x2 e ignora qualquer peça que exista no caminho. 
-![Ashwa](imgs/ashwa_moves.png)
+
+<img src="imgs/ashwa_moves.png" width="200"/>
 
 - Gaja (Elefante): anda duas casas em uma diagonal adjacente e ignora qualquer peça que exista no caminho, ou uma casa diretamente para frente. 
-![Gaja](imgs/gaja_moves.png)
+
+<img src="imgs/gaja_moves.png" width="200"/>
 
 - Mitri (Ministro): anda uma casa em uma diagonal adjacente. 
-![Mitri](imgs/mitri_moves.png)
+
+<img src="imgs/mitri_moves.png" width="200"/>
 
 - Raja (Rei): anda uma casa em qualquer direção adjacente. 
-![Raja](imgs/raja_moves.png)
+
+<img src="imgs/raja_moves.png" width="200"/>
 
 Nota-se que no caso das peças que tem movimento de várias casas, elas param ao colidir com uma peça aliada ou ao capturar uma inimiga a não ser que seja especificado que ignoram outras peças. 
 Em caso de movimento que resulta em captura, a peça que fez o movimento passa a ocupar a casa previamente pertencente a capturada.
