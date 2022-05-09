@@ -4,8 +4,8 @@
 \usepackage{hyperref}
 \usepackage[brazil]{babel}
 
-\title{especificacao-requisitos}
-\author{andrefilipedasilvafernandes }
+\title{Especificação de Requisitos: Jogo Chaturanga}
+\author{André Fernandes, Eduardo Petry, Gabriel Holstrein}
 \date{May 2022}
 
 \hypersetup{
@@ -29,8 +29,8 @@
 \begin{flushright}
     {\bf \large  Alunos:} \\
         André Filipe da Silva Fernandes \\
-        Gabriel Holstein Meireles \\
         Eduardo Vicente Petry \\
+        Gabriel Holstein Meireles \\
     [0.7cm]
         
     {\bf \large Professor:}\\
@@ -47,6 +47,27 @@
 \pagebreak
 
 \section{Introdução}
+
+Versão 0.0
+09/05/2022
+
+\begin{center}
+    \begin{tabular}{|c|p{5cm}|c|p{5cm}|}
+    
+    \hline
+    Versão & Autores & Data & Ação \\
+
+    \hline 
+    0.0 &
+    André Filipe da Silva Fernandes, Eduardo Vicente Petry, Gabriel Holstein Meireles &
+    09/05/2022 &
+    Estabelecimento dos requisitos \\
+    
+    \hline
+    
+    \end{tabular}
+\end{center}
+
 \subsection{Objetivo do Desenvolvimento}
     Desenvolvimento de um software para computador que permita a disputa local entre dois jogadores em uma partida de Chaturanga, um antigo jogo indiano.
 
@@ -71,24 +92,24 @@
     \label{figura:initial_board}
     \end{figure}
 
-    O jogador com as peças brancas deve iniciar a partida, então, os turnos alternam entre os dois jogadores. O objetivo do jogo é capturar o Raja inimigo ou aniquilar o exército adversário.
+    O jogador com as peças brancas deve iniciar a partida e, então, os turnos alternam entre os dois jogadores. O objetivo do jogo é capturar o Raja inimigo ou aniquilar o exército adversário.
 
-    A cada turno, o jogador escolhe uma peça que controla e a move para alguma casa vazia ou captura uma peça adversária.
+    A cada turno, o jogador escolhe uma peça de sua cor que está no tabuleiro e a move para alguma casa vazia ou captura uma peça adversária.
     
     As regras de movimento para cada peça são as seguintes:
 
     \begin{itemize}
         \item Padati (Soldado): anda uma casa diretamente para frente ou, no caso de existir uma peça inimiga na sua diagonal direta, captura uma peça inimiga em sua diagonal direta, como na figura \ref{figura:padati_moves}.
         
-        \item Ratha (Carruagem): anda em movimento ortogonal ao tabuleiro, ou seja, tanto para frente/trás quanto para esquerda/direita e se move quantas casas forem desejadas como na figura \ref{figura:ratha_moves}.
+        \item Ratha (Carruagem): anda em movimento ortogonal ao tabuleiro, ou seja, tanto para frente/trás quanto para esquerda/direita e se move quantas casas forem desejadas, como na figura \ref{figura:ratha_moves}.
         
-        \item Ashwa (Cavalo): anda imediatamente na diagonal oposta de um retângulo 3x2 e ignora qualquer peça que exista no caminho como na figura \ref{figura:ashwa_moves}.
+        \item Ashwa (Cavalo): anda imediatamente na diagonal oposta de um retângulo 3x2 e ignora qualquer peça que exista no caminho, como na figura \ref{figura:ashwa_moves}.
         
-        \item Gaja (Elefante): anda duas casas em uma diagonal adjacente e ignora qualquer peça que exista no caminho, ou uma casa diretamente para frente como na figura \ref{figura:gaja_moves}.
+        \item Gaja (Elefante): anda duas casas em uma diagonal adjacente e ignora qualquer peça que exista no caminho, ou uma casa diretamente para frente, como na figura \ref{figura:gaja_moves}.
         
-        \item Mitri (Ministro): anda uma casa em uma diagonal adjacente como na figura \ref{figura:mitri_moves}.
+        \item Mitri (Ministro): anda uma casa em uma diagonal adjacente, como na figura \ref{figura:mitri_moves}.
         
-        \item Raja (Rei): anda uma casa em qualquer direção adjacente como na figura \ref{figura:raja_moves}.
+        \item Raja (Rei): anda uma casa em qualquer direção adjacente, como na figura \ref{figura:raja_moves}.
         
     \end{itemize}
     
@@ -146,22 +167,49 @@
         
         \item O jogo será implementado em português.
         
+        \item Uma partida será iniciada junto com a execução do programa.
+        
     \end{itemize}
     
 \section{Requisitos de Software}
 
 \subsection{Requisitos Funcionais}
+    \begin{itemize}
+        %\item Requisito Funcional 0 - Iniciar partida (?) precisamos decidir se começa com o tabuleiro configurado ou se o botão de reiniciar partida é inicialmente iniciar e depois troca de nome
+    
+        \item Requisito Funcional 1 - Reiniciar partida: no turno do jogador, ele poderá clicar em um botão escrito "Reiniciar partida" para reiniciar o jogo. Caso o botão seja clicado, será considerado vitória do jogador adversário e o tabuleiro retornará para a configuração inicial.
+        
+        \item Requisito Funcional 2 - Escolher peça: no turno do jogador, ele poderá clicar em uma peça qualquer que está no tabuleiro. Ao clicar na peça, as possíveis casas para qual tal peça pode se mover devem tornar-se amarelas. Deve ser possível que o jogador escolha outra peça antes de fazer o movimento, basta ele clicar em outra peça.
+        Nota-se que cada peça possui movimentos distintos dependendo do seu tipo e isso deve ser obedecido na hora de determinar a posição das casas amarelas.
+        
+        \item Requisito Funcional 3 - Mover peça: no turno do jogador, após escolher uma peça, o jogador poderá movê-la para uma das casas amarelas ao clicar nela. Sempre que uma peça é movida, deve-se verificar se a condição de vitória foi atingida conforme a Descrição do jogo e, se sim, a partida é finalizada e o jogador da vez é o vencedor. Se não, o turno é finalizado e torna-se a vez do jogador adversário.
+        
+        %\item Requisito Funcional 2 - Mover peça: no turno do jogador, ele deverá clicar em uma peça de seu controle que ainda está no tabuleiro para realizar um movimento. A funcionalidade deve obedecer os seguintes requisitos:
+        %\begin{itemize}
+            %\item Cada peça possui regras de movimento distintas e devem seguir as regras especificadas na Descrição do jogo;
+            %\item Ao clicar numa peça, as casas para qual ela pode se mover tornam-se amarelas;
+           %\item Caso seja escolhido uma peça qualquer e selecionado uma casa para qual ela não pode se mover, deve-se informar jogada ilegal e o jogador deve novamente clicar em uma peça para poder realizar o movimento.
+        %\end{itemize}
+        %Após um movimento legal de peça, deve-se verificar se a condição de vitória foi atingida conforme especificado na Descrição do jogo. Se a partida não finalizou, o turno é encerrado e começa a vez do jogador adversário.
+    \end{itemize}
 
 \subsection{Requisitos Não Funcionais}
-
-    Requisitos Não Funcional 1 - Especificação de Projeto: 
-    Além do código python deve ser produzida especificação de projetos baseada em UML2, através da ferramenta Visual Paradigm.
+    \begin{itemize}
+        \item Requisito Não Funcional 1 - Especificação de Projeto: 
+    Além do código em Python deve ser produzida especificação de projetos baseada em UML2, através da ferramenta Visual Paradigm.
     
-    Requisitos Não Funcional 2 - Interface Gráfica:
+        \item Requisito Não Funcional 2 - Interface Gráfica:
     O programa deve implementar a interface gráfica utilizando as bibliotecas Tkinter ou Pyqt5.
+    \end{itemize}
 
 \subsection{Esboço da Interface}
 
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{imgs/interface.jpg}
+    \caption{Esboço da Interface}
+    \label{figura:interface}
+    \end{figure}
     
 
     
