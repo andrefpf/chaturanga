@@ -30,31 +30,4 @@ class GameWidget(QWidget):
         layout.addWidget(self.board_widget)
         layout.addWidget(self.menu_widget)
         self.setLayout(layout)
-
-        self.set_initial_board()
         self.show()
-    
-    def set_initial_board(self):
-        self.board_widget.set_piece(0, 0, 'black_ratha')
-        self.board_widget.set_piece(0, 1, 'black_ashwa')
-        self.board_widget.set_piece(0, 2, 'black_gaja')
-        self.board_widget.set_piece(0, 3, 'black_raja')
-        self.board_widget.set_piece(0, 4, 'black_mitri')
-        self.board_widget.set_piece(0, 5, 'black_gaja')
-        self.board_widget.set_piece(0, 6, 'black_ashwa')
-        self.board_widget.set_piece(0, 7, 'black_ratha')
-
-        for i in range(8):
-            self.board_widget.set_piece(1, i, 'black_padati')
-
-        self.board_widget.set_piece(7, 0, 'white_ratha')
-        self.board_widget.set_piece(7, 1, 'white_ashwa')
-        self.board_widget.set_piece(7, 2, 'white_gaja')
-        self.board_widget.set_piece(7, 3, 'white_mitri')
-        self.board_widget.set_piece(7, 4, 'white_raja')
-        self.board_widget.set_piece(7, 5, 'white_gaja')
-        self.board_widget.set_piece(7, 6, 'white_ashwa')
-        self.board_widget.set_piece(7, 7, 'white_ratha')
-
-        for i in range(8):
-            self.board_widget.set_piece(6, i, 'white_padati')
