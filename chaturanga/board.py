@@ -31,14 +31,9 @@ class Board:
             Moves a piece on the board without caring about the rules.
         '''
 
-        if origin.piece is None:
-            return
-
-        movements = origin.piece.get_possible_movements(self)
-        if target in movements:
-            target.piece = origin.piece
-            target.piece.position = target
-            origin.piece = None
+        target.piece = origin.piece
+        target.piece.position = target
+        origin.piece = None
 
     def set_initial_state(self):
         '''

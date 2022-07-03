@@ -134,7 +134,6 @@ class BoardWidget(QWidget):
         '''
             Paints as yellow all squares which is possible to reach from the specified position.
         '''
-        self.clear_highlights()
         clicked_square = self.board.get_square(row, col)
 
         if not isinstance(clicked_square.piece, Piece):
@@ -183,21 +182,48 @@ class BoardWidget(QWidget):
                 piece_name = piece_prefix + 'ratha'
                 self.set_piece(square.row, square.col, piece_name)
 
+    def choose_piece(self, target):
+        if target.piece is None:
+            # TODO: Show warning on GUI
+            return 
+
+        # TODO: Evaluate if piece belongs to the current player
+
+        self.last_piece = target.piece
+        self.clear_highlights()
+        self.highlight_selected_square(target.row, target.col)
+        self.highlight_movements(target.row, target.col)
+    
+    def move_choosen_piece(self, target):
+        origin = self.last_piece.position
+
+        if self.last_piece is None:
+            # TODO: Show warning on GUI
+            return
+
+        # TODO: Evaluate if 
+
+        movements = self.last_piece.get_possible_movements(self.board)
+        if target in movements:
+            self.board.move(self.last_piece.position, target)
+
+        # TODO: Evaluate win condition
+        # TODO: Increment turn counter
+
+        self.last_piece = None
+        self.clear_highlights()
+        self.update_board()
+
     def square_clicked_callback(self, row, col):
         '''
             Function callback for everytime a square is clicked.
         '''
+
+        # TODO: Evaluate if match is ongoing
+
         clicked_square = self.board.get_square(row, col)
 
         if self.last_piece is None:
-            if clicked_square.piece is None:
-                return 
-            self.highlight_movements(row, col)
-            self.last_piece = clicked_square.piece
-            self.highlight_selected_square(clicked_square.row, clicked_square.col)
-
+            self.choose_piece(clicked_square)
         else:
-            self.clear_highlights()
-            self.board.move(self.last_piece.position, clicked_square)
-            self.update_board()
-            self.last_piece = None
+            self.move_choosen_piece(clicked_square)
