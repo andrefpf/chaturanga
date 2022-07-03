@@ -12,8 +12,4 @@ class Piece:
         self.position = position
 
     def get_possible_movements(self, board):
-        row = self.position.row
-        col = self.position.col
-        if row > 7:
-            return []
-        return [board.get_square(self.position.row+1, self.position.col)]
+        return []

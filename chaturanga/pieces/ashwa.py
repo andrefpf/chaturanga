@@ -1,20 +1,17 @@
-from chaturanga.pieces.piece import Piece
+from chaturanga.pieces import Piece
 
 
 class Ashwa(Piece):
     def get_possible_movements(self, board):
-        row = self.position.row
-        col = self.position.col
-
         all_movements = [
-            (row+1, col+2),
-            (row+1, col-2),
-            (row-1, col+2),
-            (row-1, col-2),
-            (row+2, col+1),
-            (row+2, col-1),
-            (row-2, col+1),
-            (row-2, col-1),
+            (self.position.row+1, self.position.col+2),
+            (self.position.row+1, self.position.col-2),
+            (self.position.row-1, self.position.col+2),
+            (self.position.row-1, self.position.col-2),
+            (self.position.row+2, self.position.col+1),
+            (self.position.row+2, self.position.col-1),
+            (self.position.row-2, self.position.col+1),
+            (self.position.row-2, self.position.col-1),
         ]
 
         valid_movements = []
