@@ -1,13 +1,15 @@
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
-
 from ui.board_widget import BoardWidget
+from chaturanga.game import Game
 
 
 class GameWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        self.game = Game()
 
         self.board_widget = BoardWidget(self)
         self.player_label = QLabel('Jogam as Brancas.')

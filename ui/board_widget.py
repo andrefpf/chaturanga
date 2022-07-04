@@ -45,7 +45,7 @@ class BoardWidget(QWidget):
         self.setMinimumSize(500, 500)
         self.setMaximumSize(500, 500)
         
-        self.board = Board()
+        self.board = self.parent().game.board
         self.last_piece = None
 
         pal = QPalette()
