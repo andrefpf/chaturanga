@@ -13,3 +13,10 @@ class Piece:
 
     def get_possible_movements(self, board):
         return []
+
+    def __repr__(self):
+        name = self.__class__.__name__
+        color = self.color
+        row = self.position.row
+        col = self.position.col
+        return f'<{name} {color} at ({row}, {col})>'

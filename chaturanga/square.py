@@ -16,3 +16,6 @@ class Square:
 
     def delete_piece(self):
         self.piece = None
+
+    def __repr__(self):
+        return str(self.piece)

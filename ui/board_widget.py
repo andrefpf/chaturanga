@@ -8,8 +8,8 @@ from chaturanga.board import Board
 
 class SquareHighlight(Enum):
     NORMAL = 0
-    HIGHLIGHT = 1
-    SELECTED = 2
+    YELLOW = 1
+    RED = 2
 
 
 class BoardSquareWidget(QLabel):
@@ -27,10 +27,10 @@ class BoardSquareWidget(QLabel):
         if t == SquareHighlight.NORMAL:
             self.setStyleSheet(f'background-color: rgb(255,127,42)')
 
-        elif t == SquareHighlight.HIGHLIGHT:
+        elif t == SquareHighlight.YELLOW:
             self.setStyleSheet(f'background-color: rgb(212,170,0)')
 
-        elif t == SquareHighlight.SELECTED:
+        elif t == SquareHighlight.RED:
             self.setStyleSheet(f'background-color: rgb(200,55,55)')
         else:
             pass
@@ -97,7 +97,7 @@ class BoardWidget(QWidget):
 
         self.setLayout(self.grid)
 
-    def set_piece(self, row, col, piece_name):
+    def _set_piece(self, row, col, piece_name):
         '''
             Sets the correspondent image for the square of your choice.
         '''
@@ -106,6 +106,9 @@ class BoardWidget(QWidget):
         ratio = 0.7 if 'padati' in piece_name else 0.9
         pixmap = pixmap.scaled(square_widget.size() * ratio, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         square_widget.setPixmap(pixmap)
+
+    def square_clicked_callback(self, row, col):
+        self.parent().square_clicked_callback(row, col)
 
     def clear_highlights(self):
         '''
@@ -116,19 +119,19 @@ class BoardWidget(QWidget):
                 square = self.grid.itemAtPosition(i,j).widget()
                 square.highlight(SquareHighlight.NORMAL)
 
-    def highlight_square(self, row, col):
+    def highlight_square_yellow(self, row, col):
         '''
             Paints a square as yellow.
         '''
         square_widget = self.grid.itemAtPosition(row, col).widget()
-        square_widget.highlight(SquareHighlight.HIGHLIGHT)
+        square_widget.highlight(SquareHighlight.YELLOW)
 
-    def highlight_selected_square(self, row, col):
+    def highlight_square_red(self, row, col):
         '''
             Paints a square as red. 
         '''
         square_widget = self.grid.itemAtPosition(row, col).widget()
-        square_widget.highlight(SquareHighlight.SELECTED)
+        square_widget.highlight(SquareHighlight.RED)
 
     def highlight_movements(self, row, col):
         '''
@@ -142,7 +145,7 @@ class BoardWidget(QWidget):
         possible_movements = clicked_square.piece.get_possible_movements(self.board)
         
         for square in possible_movements:
-            self.highlight_square(square.row, square.col)
+            self.highlight_square_yellow(square.row, square.col)
 
     def update_board(self):
         '''
@@ -152,7 +155,7 @@ class BoardWidget(QWidget):
 
         for square in self.board:
             if not isinstance(square.piece, Piece):
-                self.set_piece(square.row, square.col, 'empty')
+                self._set_piece(square.row, square.col, 'empty')
                 continue
 
             piece = square.piece 
@@ -160,70 +163,24 @@ class BoardWidget(QWidget):
 
             if isinstance(piece, Ashwa):
                 piece_name = piece_prefix + 'ashwa'
-                self.set_piece(square.row, square.col, piece_name)
+                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Gaja):
                 piece_name = piece_prefix + 'gaja'
-                self.set_piece(square.row, square.col, piece_name)
+                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Mitri):
                 piece_name = piece_prefix + 'mitri'
-                self.set_piece(square.row, square.col, piece_name)
+                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Padati):
                 piece_name = piece_prefix + 'padati'
-                self.set_piece(square.row, square.col, piece_name)
+                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Raja):
                 piece_name = piece_prefix + 'raja'
-                self.set_piece(square.row, square.col, piece_name)
+                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Ratha):
                 piece_name = piece_prefix + 'ratha'
-                self.set_piece(square.row, square.col, piece_name)
-
-    def choose_piece(self, target):
-        if target.piece is None:
-            # TODO: Show warning on GUI
-            return 
-
-        # TODO: Evaluate if piece belongs to the current player
-
-        self.last_piece = target.piece
-        self.clear_highlights()
-        self.highlight_selected_square(target.row, target.col)
-        self.highlight_movements(target.row, target.col)
-    
-    def move_choosen_piece(self, target):
-        origin = self.last_piece.position
-
-        if self.last_piece is None:
-            # TODO: Show warning on GUI
-            return
-
-        # TODO: Evaluate if 
-
-        movements = self.last_piece.get_possible_movements(self.board)
-        if target in movements:
-            self.board.move(self.last_piece.position, target)
-
-        # TODO: Evaluate win condition
-        # TODO: Increment turn counter
-
-        self.last_piece = None
-        self.clear_highlights()
-        self.update_board()
-
-    def square_clicked_callback(self, row, col):
-        '''
-            Function callback for everytime a square is clicked.
-        '''
-
-        # TODO: Evaluate if match is ongoing
-
-        clicked_square = self.board.get_square(row, col)
-
-        if self.last_piece is None:
-            self.choose_piece(clicked_square)
-        else:
-            self.move_choosen_piece(clicked_square)
+                self._set_piece(square.row, square.col, piece_name)

@@ -1,5 +1,6 @@
 from chaturanga.square import Square
 from chaturanga.pieces import *
+from chaturanga.errors import InvalidPosition
 
 
 class Board:
@@ -19,21 +20,12 @@ class Board:
 
     def get_square(self, row, col):
         if not (0 <= row < 8):
-            raise ValueError("Rows should be in the interval [0-8]")
+            raise InvalidPosition("Rows should be in the interval [0-8]")
 
         if not (0 <= col < 8):
-            raise ValueError("Columns should be in the interval [0-8]")
+            raise InvalidPosition("Columns should be in the interval [0-8]")
 
         return self.squares[row][col]
-
-    def move(self, origin, target):
-        '''
-            Moves a piece on the board without caring about the rules.
-        '''
-
-        target.piece = origin.piece
-        target.piece.position = target
-        origin.piece = None
 
     def set_initial_state(self):
         '''
@@ -51,6 +43,9 @@ class Board:
             Ratha,
         ]
 
+        for square in self:
+            square.delete_piece()
+
         for i, PieceClass in enumerate(first_row_order):
             piece = PieceClass(Color.BLACK)
             self.get_square(0, i).set_piece(piece)
@@ -66,6 +61,14 @@ class Board:
         for i in range(8):
             piece = Padati(Color.WHITE)
             self.get_square(6, i).set_piece(piece)
+
+    def move(self, origin, target):
+        '''
+            Moves a piece on the board without caring about the rules.
+        '''
+        target.piece = origin.piece
+        target.piece.position = target
+        origin.piece = None
 
     def __iter__(self):
         list_squares = []
