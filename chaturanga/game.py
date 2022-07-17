@@ -37,10 +37,10 @@ class Game:
         self.increment_turn_counter()
 
     def evaluate_movement(self, origin, target):
-        if not origin in self.board:
+        if origin not in self.board:
             raise InvalidPosition("Posição fora do tabuleiro")
 
-        if not target in self.board:
+        if target not in self.board:
             raise InvalidPosition("Posição fora do tabuleiro")
 
         if not origin.has_piece():
@@ -64,8 +64,9 @@ class Game:
         self._check_army_decimated()
 
     def _check_kings_death(self):
-        contains_raja = lambda x: x.has_piece() and isinstance(x.get_piece(), Raja)
-        rajas = [square for square in self.board if contains_raja(square)]
+        rajas = [
+            square for square in self.board if isinstance(square.get_piece(), Raja)
+        ]
 
         if len(rajas) == 2:
             return
@@ -74,4 +75,19 @@ class Game:
         self._winner = rajas[0].get_piece().color
 
     def _check_army_decimated(self):
-        NotImplemented
+        def _has_white(square):
+            return square.has_piece() and square.piece.color == Color.WHITE
+
+        def _has_black(square):
+            return square.has_piece() and square.piece.color == Color.BLACK
+
+        black_pieces = list(filter(_has_black, self.board))
+        white_pieces = list(filter(_has_white, self.board))
+
+        if len(black_pieces) <= 1:
+            self._match_finished = True
+            self._winner = Color.WHITE
+
+        if len(white_pieces) <= 1:
+            self._match_finished = True
+            self._winner = Color.BLACK

@@ -3,9 +3,6 @@ from chaturanga.pieces.piece import Piece
 
 class Raja(Piece):
     def get_possible_movements(self, board):
-        _row = self.position.row
-        _col = self.position.col
-
         all_movements = [
             (self.position.row + 1, self.position.col),
             (self.position.row - 1, self.position.col),

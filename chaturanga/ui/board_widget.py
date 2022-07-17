@@ -1,9 +1,8 @@
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QPalette, QPixmap
+from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout
 from PyQt5.QtCore import Qt
 from enum import Enum
-from chaturanga.pieces import *
-from chaturanga.board import Board
+from chaturanga.pieces import Ashwa, Gaja, Mitri, Padati, Raja, Ratha, Color, Piece
 
 
 class SquareHighlight(Enum):
@@ -25,13 +24,13 @@ class BoardSquareWidget(QLabel):
 
     def highlight(self, t):
         if t == SquareHighlight.NORMAL:
-            self.setStyleSheet(f"background-color: rgb(255,127,42)")
+            self.setStyleSheet("background-color: rgb(255,127,42)")
 
         elif t == SquareHighlight.YELLOW:
-            self.setStyleSheet(f"background-color: rgb(212,170,0)")
+            self.setStyleSheet("background-color: rgb(212,170,0)")
 
         elif t == SquareHighlight.RED:
-            self.setStyleSheet(f"background-color: rgb(200,55,55)")
+            self.setStyleSheet("background-color: rgb(200,55,55)")
         else:
             pass
 

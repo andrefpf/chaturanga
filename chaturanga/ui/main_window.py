@@ -1,7 +1,4 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *
-
-from chaturanga.ui.board_widget import BoardWidget
+from PyQt5.QtWidgets import QMainWindow
 from chaturanga.ui.game_widget import GameWidget
 
 

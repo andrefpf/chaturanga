@@ -1,5 +1,5 @@
 from chaturanga.square import Square
-from chaturanga.pieces import *
+from chaturanga.pieces import Ashwa, Gaja, Mitri, Padati, Raja, Ratha, Color
 from chaturanga.errors import InvalidPosition
 
 

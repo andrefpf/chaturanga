@@ -1,5 +1,11 @@
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import (
+    QWidget,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
+    QHBoxLayout,
+    QMessageBox,
+)
 from PyQt5.QtCore import Qt
 from chaturanga.ui.board_widget import BoardWidget
 from chaturanga.game import Game
