@@ -19,7 +19,7 @@ class BoardSquareWidget(QLabel):
 
         self.row = row
         self.col = col
-        
+
         self.setAlignment(Qt.AlignCenter)
         self.show()
 

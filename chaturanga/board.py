@@ -4,7 +4,7 @@ from chaturanga.errors import InvalidPosition
 
 
 class Board:
-    def __init__(self):        
+    def __init__(self):
         self.squares = self.create_squares()
         self.set_initial_state()
 
@@ -13,7 +13,7 @@ class Board:
         for i in range(8):
             row = []
             for j in range(8):
-                s = Square(i,j,None)
+                s = Square(i, j, None)
                 row.append(s)
             squares.append(row)
         return squares
@@ -28,9 +28,9 @@ class Board:
         return self.squares[row][col]
 
     def set_initial_state(self):
-        '''
-            Puts every piece in the correct place to start the game.
-        '''
+        """
+        Puts every piece in the correct place to start the game.
+        """
 
         first_row_order = [
             Ratha,
@@ -49,7 +49,7 @@ class Board:
         for i, PieceClass in enumerate(first_row_order):
             piece = PieceClass(Color.BLACK)
             self.get_square(0, i).set_piece(piece)
-        
+
         for i in range(8):
             piece = Padati(Color.BLACK)
             self.get_square(1, i).set_piece(piece)
@@ -63,9 +63,9 @@ class Board:
             self.get_square(6, i).set_piece(piece)
 
     def move(self, origin, target):
-        '''
-            Moves a piece on the board without caring about the rules.
-        '''
+        """
+        Moves a piece on the board without caring about the rules.
+        """
         target.piece = origin.piece
         target.piece.position = target
         origin.piece = None

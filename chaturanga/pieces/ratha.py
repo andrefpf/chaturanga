@@ -12,12 +12,12 @@ class Ratha(Piece):
             square = board.get_square(row, col)
             if not square.has_piece():
                 valid_movements.append(square)
-            elif (square.piece.color != self.color):
+            elif square.piece.color != self.color:
                 valid_movements.append(square)
                 break
-            elif (square.piece.color == self.color):
+            elif square.piece.color == self.color:
                 break
-        
+
         row = self.position.row
         col = self.position.col
         while row < 7:
@@ -25,12 +25,12 @@ class Ratha(Piece):
             square = board.get_square(row, col)
             if not square.has_piece():
                 valid_movements.append(square)
-            elif (square.piece.color != self.color):
+            elif square.piece.color != self.color:
                 valid_movements.append(square)
                 break
-            elif (square.piece.color == self.color):
+            elif square.piece.color == self.color:
                 break
-        
+
         row = self.position.row
         col = self.position.col
         while col > 0:
@@ -38,10 +38,10 @@ class Ratha(Piece):
             square = board.get_square(row, col)
             if not square.has_piece():
                 valid_movements.append(square)
-            elif (square.piece.color != self.color):
+            elif square.piece.color != self.color:
                 valid_movements.append(square)
                 break
-            elif (square.piece.color == self.color):
+            elif square.piece.color == self.color:
                 break
 
         row = self.position.row
@@ -51,10 +51,10 @@ class Ratha(Piece):
             square = board.get_square(row, col)
             if not square.has_piece():
                 valid_movements.append(square)
-            elif (square.piece.color != self.color):
+            elif square.piece.color != self.color:
                 valid_movements.append(square)
                 break
-            elif (square.piece.color == self.color):
+            elif square.piece.color == self.color:
                 break
 
         return valid_movements

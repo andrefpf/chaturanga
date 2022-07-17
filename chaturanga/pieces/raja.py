@@ -7,29 +7,29 @@ class Raja(Piece):
         _col = self.position.col
 
         all_movements = [
-            (self.position.row+1, self.position.col),
-            (self.position.row-1, self.position.col),
-            (self.position.row,   self.position.col+1),
-            (self.position.row,   self.position.col-1),
-            (self.position.row+1, self.position.col+1),
-            (self.position.row+1, self.position.col-1),
-            (self.position.row-1, self.position.col+1),
-            (self.position.row-1, self.position.col-1),
+            (self.position.row + 1, self.position.col),
+            (self.position.row - 1, self.position.col),
+            (self.position.row, self.position.col + 1),
+            (self.position.row, self.position.col - 1),
+            (self.position.row + 1, self.position.col + 1),
+            (self.position.row + 1, self.position.col - 1),
+            (self.position.row - 1, self.position.col + 1),
+            (self.position.row - 1, self.position.col - 1),
         ]
 
         valid_movements = []
         for row, col in all_movements:
             if not (0 <= row < 8):
                 continue
-                
+
             if not (0 <= col < 8):
-                continue 
+                continue
 
             square = board.get_square(row, col)
 
             if not square.has_piece():
                 valid_movements.append(square)
-            
+
             elif square.piece.color != self.color:
                 valid_movements.append(square)
 
