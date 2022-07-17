@@ -23,20 +23,23 @@ class Game:
         else:
             return Color.BLACK
 
-    def increment_turn_counter(self):
-        self._turn += 1
+    def get_winner(self):
+        return self._winner
 
     def make_movement(self, origin, target):
         """
         Attempts to make a movement. If it is not a valid one, throws an error.
         """
-        self.evaluate_movement(origin, target)
+        self._evaluate_movement(origin, target)
         self.board.move(origin, target)
-        self.evaluate_promotion(target.piece)
-        self.evaluate_winning_condition()
-        self.increment_turn_counter()
+        self._evaluate_promotion(target.piece)
+        self._evaluate_winning_condition()
+        self._increment_turn_counter()
 
-    def evaluate_movement(self, origin, target):
+    def _increment_turn_counter(self):
+        self._turn += 1
+
+    def _evaluate_movement(self, origin, target):
         if origin not in self.board:
             raise InvalidPosition("Posição fora do tabuleiro")
 
@@ -53,13 +56,10 @@ class Game:
         if target not in movements:
             raise InvalidMovement("Jogada inválida")
 
-    def get_winner(self):
-        return self._winner
-
-    def evaluate_promotion(self, piece):
+    def _evaluate_promotion(self, piece):
         NotImplemented
 
-    def evaluate_winning_condition(self):
+    def _evaluate_winning_condition(self):
         self._check_kings_death()
         self._check_army_decimated()
 

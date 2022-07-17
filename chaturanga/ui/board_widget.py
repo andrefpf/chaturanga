@@ -43,9 +43,7 @@ class BoardWidget(QWidget):
         super().__init__(parent)
         self.setMinimumSize(500, 500)
         self.setMaximumSize(500, 500)
-
         self.board = self.parent().game.board
-        self.last_piece = None
 
         self._load_imgs()
         self._create_main_grid()
