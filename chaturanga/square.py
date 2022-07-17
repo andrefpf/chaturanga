@@ -18,4 +18,7 @@ class Square:
         self.piece = None
 
     def __repr__(self):
-        return str(self.piece)
+        if self.piece is None:
+            return f"<Empty at ({self.row}, {self.col})>"
+        else:
+            return str(self.piece)

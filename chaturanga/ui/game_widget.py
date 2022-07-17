@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import (
     QLabel,
     QPushButton,
     QVBoxLayout,
-    QHBoxLayout,
     QMessageBox,
 )
 from PyQt5.QtCore import Qt
@@ -20,29 +19,38 @@ class GameWidget(QWidget):
         self.last_piece = None
 
         self.board_widget = BoardWidget(self)
-        self.player_label = QLabel("Jogam as Brancas.")
-        self.info_label = QLabel("Nada de errado, apenas jogue.")
+        self.player_label = QLabel("JOGAM AS BRANCAS.")
+        self.info_label = QLabel("")
         self.restart_button = QPushButton("Começar um novo jogo")
+
+        self.player_label.setStyleSheet("font-weight: bold")
 
         self.restart_button.clicked.connect(self.restart_game)
         menu_layout = QVBoxLayout()
         menu_layout.addWidget(self.player_label)
-        menu_layout.addWidget(self.info_label)
         menu_layout.addWidget(self.restart_button)
+        menu_layout.addWidget(self.info_label)
         menu_layout.setSpacing(25)
-        menu_layout.setAlignment(Qt.AlignCenter)
 
         self.menu_widget = QWidget()
         self.menu_widget.setLayout(menu_layout)
         self.player_label.setAlignment(Qt.AlignCenter)
         self.info_label.setAlignment(Qt.AlignCenter)
 
-        layout = QHBoxLayout()
+        layout = QVBoxLayout()
         layout.addWidget(self.board_widget)
         layout.addWidget(self.menu_widget)
+        layout.setAlignment(Qt.AlignCenter)
 
         self.setLayout(layout)
+        self.set_visualization_player_color(Color.WHITE)
         self.show()
+
+    def set_visualization_player_color(self, color):
+        if color == Color.WHITE:
+            self.player_label.setText("JOGAM AS BRANCAS.")
+        else:
+            self.player_label.setText("JOGAM AS PRETAS.")
 
     def restart_game(self):
         self.game.restart_game()
@@ -95,12 +103,8 @@ class GameWidget(QWidget):
         if self.game.match_finished():
             self.show_winner()
         else:
-            if self.game.current_color() == Color.WHITE:
-                self.player_label.setText("Jogam as Brancas.")
-            elif self.game.current_color() == Color.BLACK:
-                self.player_label.setText("Jogam as Pretas.")
-            else:
-                raise ValueError("Unknown current player.")
+            color = self.game.current_color()
+            self.set_visualization_player_color(color)
 
     def show_winner(self):
         msg = QMessageBox()

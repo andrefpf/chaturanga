@@ -1,4 +1,4 @@
-from PyQt5.QtGui import QPalette, QPixmap
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout
 from PyQt5.QtCore import Qt
 from enum import Enum
@@ -46,12 +46,6 @@ class BoardWidget(QWidget):
 
         self.board = self.parent().game.board
         self.last_piece = None
-
-        pal = QPalette()
-        pal.setColor(QPalette.Window, Qt.black)
-        self.setAutoFillBackground(True)
-        self.setPalette(pal)
-        self.setStyleSheet("background-color:black")
 
         self._load_imgs()
         self._create_main_grid()
