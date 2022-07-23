@@ -154,24 +154,20 @@ class BoardWidget(QWidget):
 
             if isinstance(piece, Ashwa):
                 piece_name = piece_prefix + "ashwa"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Gaja):
                 piece_name = piece_prefix + "gaja"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Mitri):
                 piece_name = piece_prefix + "mitri"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Padati):
                 piece_name = piece_prefix + "padati"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Raja):
                 piece_name = piece_prefix + "raja"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Ratha):
                 piece_name = piece_prefix + "ratha"
-                self._set_piece(square.row, square.col, piece_name)
+
+            self._set_piece(square.row, square.col, piece_name)

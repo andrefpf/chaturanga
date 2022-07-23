@@ -2,7 +2,7 @@ from chaturanga.game import Game
 from chaturanga.pieces import Color
 
 
-def test_kings_death():
+def test_white_king_death():
     moves = [
         ((7, 6), (5, 5)),
         ((1, 0), (2, 0)),
@@ -33,7 +33,37 @@ def test_kings_death():
     assert game.get_winner() == Color.WHITE
 
 
-def test_army_decimated():
+def test_black_king_death():
+    moves = [
+        ((6, 3), (5, 3)),
+        ((0, 6), (2, 5)),
+        ((7, 3), (6, 3)),
+        ((2, 5), (4, 4)),
+        ((6, 6), (5, 6)),
+    ]
+
+    game = Game()
+    board = game.board
+
+    for o, t in moves:
+        o_row, o_col = o
+        t_row, t_col = t
+        origin = board.get_square(o_row, o_col)
+        target = board.get_square(t_row, t_col)
+        game.make_movement(origin, target)
+
+        assert game.match_finished() is False
+        assert game.get_winner() is None
+
+    origin = board.get_square(4, 4)
+    target = board.get_square(6, 3)
+    game.make_movement(origin, target)
+
+    assert game.match_finished() is True
+    assert game.get_winner() == Color.BLACK
+
+
+def test_white_army_decimated():
     moves = [
         ((6, 7), (5, 7)),
         ((1, 7), (2, 7)),
