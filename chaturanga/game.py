@@ -82,26 +82,30 @@ class Game:
             square for square in self.board if isinstance(square.get_piece(), Raja)
         ]
 
-        if len(rajas) == 2:
-            return
+        if len(rajas) == 1:
+            self._match_finished = True
+            self._winner = rajas[0].get_piece().color
 
-        self._match_finished = True
-        self._winner = rajas[0].get_piece().color
-
-    def _check_army_decimated(self):
-        def _has_white(square):
-            return square.has_piece() and square.piece.color == Color.WHITE
-
+    def get_black_pieces(self):
         def _has_black(square):
             return square.has_piece() and square.piece.color == Color.BLACK
+        return list(filter(_has_black, self.board))
 
-        black_pieces = list(filter(_has_black, self.board))
-        white_pieces = list(filter(_has_white, self.board))
+    def get_white_pieces(self):
+        def _has_white(square):
+            return square.has_piece() and square.piece.color == Color.WHITE
+        return list(filter(_has_white, self.board))
+
+    def set_winner(self, color):
+        self._match_finished = True
+        self._winner = color
+
+    def _check_army_decimated(self):
+        black_pieces = self.get_black_pieces()
+        white_pieces = self.get_white_pieces()
 
         if len(black_pieces) <= 1:
-            self._match_finished = True
-            self._winner = Color.WHITE
+            self.set_winner(Color.WHITE)
 
         if len(white_pieces) <= 1:
-            self._match_finished = True
-            self._winner = Color.BLACK
+            self.set_winner(Color.BLACK)

@@ -12,9 +12,9 @@ class Board:
         """
         Moves a piece on the board without caring about the rules.
         """
-        target.piece = origin.piece
-        target.piece.position = target
-        origin.piece = None
+        piece = origin.get_piece()
+        target.set_piece(piece)
+        origin.set_piece(None)
 
     def create_squares(self):
         squares = []

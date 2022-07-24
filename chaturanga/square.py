@@ -18,7 +18,8 @@ class Square:
 
     def set_piece(self, piece):
         self.piece = piece
-        self.piece.position = self
+        if piece is not None:
+            self.piece.position = self
 
     def delete_piece(self):
         self.piece = None
