@@ -4,6 +4,12 @@ class Square:
         self.col = col
         self.piece = piece
 
+    def get_row(self):
+        return self.row
+    
+    def get_col(self):
+        return self.col
+
     def has_piece(self):
         return self.piece is not None
 

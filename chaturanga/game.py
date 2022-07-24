@@ -1,5 +1,5 @@
 from chaturanga.board import Board
-from chaturanga.pieces import Color, Raja
+from chaturanga.pieces import Color, Raja, Padati, Mitri
 from chaturanga.errors import InvalidMovement, InvalidPosition
 
 
@@ -62,7 +62,16 @@ class Game:
             raise InvalidMovement("Jogada inválida")
 
     def _evaluate_promotion(self, piece):
-        NotImplemented
+        if not isinstance(piece, Padati):
+            return
+        
+        color = piece.get_color()
+        pos = piece.get_position()
+        row = pos.get_row()
+
+        if (color == Color.WHITE and row == 0) or (color == Color.BLACK and row == 7):
+            new_piece = Mitri(color)
+            pos.set_piece(new_piece)
 
     def _evaluate_winning_condition(self):
         self._check_kings_death()
