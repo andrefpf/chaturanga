@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "chaturanga"
+version = "0.1.0"
+description = ""
+authors = ["Andre Fernandes <fpf.andre@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+PyQt5 = "^5.15.7"
+
+[tool.poetry.dev-dependencies]
+black = "^22.6.0"
+flake8 = "^4.0.1"
+pytest = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

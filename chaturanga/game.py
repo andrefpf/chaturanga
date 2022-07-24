@@ -27,31 +27,31 @@ class Game:
         self._turn += 1
 
     def make_movement(self, origin, target):
-        '''
-            Attempts to make a movement. If it is not a valid one, throws an error.
-        '''
+        """
+        Attempts to make a movement. If it is not a valid one, throws an error.
+        """
         self.evaluate_movement(origin, target)
         self.board.move(origin, target)
         self.evaluate_promotion(target.piece)
         self.evaluate_winning_condition()
         self.increment_turn_counter()
-    
-    def evaluate_movement(self, origin, target):
-        if not origin in self.board:
-            raise InvalidPosition('Posição fora do tabuleiro')
 
-        if not target in self.board:
-            raise InvalidPosition('Posição fora do tabuleiro')
+    def evaluate_movement(self, origin, target):
+        if origin not in self.board:
+            raise InvalidPosition("Posição fora do tabuleiro")
+
+        if target not in self.board:
+            raise InvalidPosition("Posição fora do tabuleiro")
 
         if not origin.has_piece():
-            raise InvalidMovement('Nenhuma peça selecionada')
-    
+            raise InvalidMovement("Nenhuma peça selecionada")
+
         if origin.get_piece().color != self.current_color():
-            raise InvalidMovement('Escolha uma peça da cor certa')
+            raise InvalidMovement("Escolha uma peça da cor certa")
 
         movements = origin.get_piece().get_possible_movements(self.board)
         if target not in movements:
-            raise InvalidMovement('Jogada inválida')
+            raise InvalidMovement("Jogada inválida")
 
     def get_winner(self):
         return self._winner
@@ -64,14 +64,30 @@ class Game:
         self._check_army_decimated()
 
     def _check_kings_death(self):
-        contains_raja = lambda x: x.has_piece() and isinstance(x.get_piece(), Raja)
-        rajas = [square for square in self.board if contains_raja(square)]
+        rajas = [
+            square for square in self.board if isinstance(square.get_piece(), Raja)
+        ]
 
         if len(rajas) == 2:
-            return 
-        
+            return
+
         self._match_finished = True
         self._winner = rajas[0].get_piece().color
 
     def _check_army_decimated(self):
-        NotImplemented
+        def _has_white(square):
+            return square.has_piece() and square.piece.color == Color.WHITE
+
+        def _has_black(square):
+            return square.has_piece() and square.piece.color == Color.BLACK
+
+        black_pieces = list(filter(_has_black, self.board))
+        white_pieces = list(filter(_has_white, self.board))
+
+        if len(black_pieces) <= 1:
+            self._match_finished = True
+            self._winner = Color.WHITE
+
+        if len(white_pieces) <= 1:
+            self._match_finished = True
+            self._winner = Color.BLACK

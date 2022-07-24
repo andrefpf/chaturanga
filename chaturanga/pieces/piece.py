@@ -1,4 +1,4 @@
-from enum import Enum 
+from enum import Enum
 
 
 class Color(Enum):
@@ -19,4 +19,4 @@ class Piece:
         color = self.color
         row = self.position.row
         col = self.position.col
-        return f'<{name} {color} at ({row}, {col})>'
+        return f"<{name} {color} at ({row}, {col})>"
