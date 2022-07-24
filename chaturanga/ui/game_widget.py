@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QMessageBox,
 )
+import sys
 from PyQt5.QtCore import Qt
 from chaturanga.ui.board_widget import BoardWidget
 from chaturanga.game import Game
@@ -133,6 +134,6 @@ class GameWidget(QWidget):
         should_exit = msg.exec()
 
         if should_exit:
-            exit()
+            sys.exit()
         else:
             self.restart_game()

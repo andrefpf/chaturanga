@@ -149,7 +149,7 @@ class BoardWidget(QWidget):
                 self._set_piece(square.row, square.col, "empty")
                 continue
 
-            piece = square.piece
+            piece = square.get_piece()
             piece_prefix = "white_" if piece.color == Color.WHITE else "black_"
 
             if isinstance(piece, Ashwa):
