@@ -11,6 +11,7 @@ class Game:
     def restart_game(self):
         self.board.set_initial_state()
         self._turn = 0
+        self._player = Color.WHITE
         self._winner = None
         self._match_finished = False
 
@@ -18,10 +19,7 @@ class Game:
         return self._match_finished
 
     def current_color(self):
-        if self._turn % 2 == 0:
-            return Color.WHITE
-        else:
-            return Color.BLACK
+        return self._player
 
     def get_winner(self):
         return self._winner
@@ -34,10 +32,17 @@ class Game:
         self.board.move(origin, target)
         self._evaluate_promotion(target.piece)
         self._evaluate_winning_condition()
-        self._increment_turn_counter()
+
+        if not self.match_finished():
+            self._increment_turn_counter()
 
     def _increment_turn_counter(self):
         self._turn += 1
+
+        if self._turn % 2 == 0:
+            self._player = Color.WHITE
+        else:
+            self._player = Color.BLACK
 
     def _evaluate_movement(self, origin, target):
         if origin not in self.board:
