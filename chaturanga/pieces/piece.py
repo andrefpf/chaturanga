@@ -11,6 +11,12 @@ class Piece:
         self.color = color
         self.position = position
 
+    def get_color(self):
+        return self.color
+
+    def get_position(self):
+        return self.position
+
     def get_possible_movements(self, board):
         return []
 

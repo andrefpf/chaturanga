@@ -8,6 +8,14 @@ class Board:
         self.squares = self.create_squares()
         self.set_initial_state()
 
+    def move(self, origin, target):
+        """
+        Moves a piece on the board without caring about the rules.
+        """
+        piece = origin.get_piece()
+        target.set_piece(piece)
+        origin.set_piece(None)
+
     def create_squares(self):
         squares = []
         for i in range(8):
@@ -61,14 +69,6 @@ class Board:
         for i in range(8):
             piece = Padati(Color.WHITE)
             self.get_square(6, i).set_piece(piece)
-
-    def move(self, origin, target):
-        """
-        Moves a piece on the board without caring about the rules.
-        """
-        target.piece = origin.piece
-        target.piece.position = target
-        origin.piece = None
 
     def __iter__(self):
         list_squares = []

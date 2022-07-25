@@ -1,5 +1,5 @@
 from chaturanga.board import Board
-from chaturanga.pieces import Color, Raja
+from chaturanga.pieces import Color, Raja, Padati, Mitri
 from chaturanga.errors import InvalidMovement, InvalidPosition
 
 
@@ -11,6 +11,7 @@ class Game:
     def restart_game(self):
         self.board.set_initial_state()
         self._turn = 0
+        self._player = Color.WHITE
         self._winner = None
         self._match_finished = False
 
@@ -18,25 +19,32 @@ class Game:
         return self._match_finished
 
     def current_color(self):
-        if self._turn % 2 == 0:
-            return Color.WHITE
-        else:
-            return Color.BLACK
+        return self._player
 
-    def increment_turn_counter(self):
-        self._turn += 1
+    def get_winner(self):
+        return self._winner
 
     def make_movement(self, origin, target):
         """
         Attempts to make a movement. If it is not a valid one, throws an error.
         """
-        self.evaluate_movement(origin, target)
+        self._evaluate_movement(origin, target)
         self.board.move(origin, target)
-        self.evaluate_promotion(target.piece)
-        self.evaluate_winning_condition()
-        self.increment_turn_counter()
+        self._evaluate_promotion(target.piece)
+        self._evaluate_winning_condition()
 
-    def evaluate_movement(self, origin, target):
+        if not self.match_finished():
+            self._increment_turn_counter()
+
+    def _increment_turn_counter(self):
+        self._turn += 1
+
+        if self._turn % 2 == 0:
+            self._player = Color.WHITE
+        else:
+            self._player = Color.BLACK
+
+    def _evaluate_movement(self, origin, target):
         if origin not in self.board:
             raise InvalidPosition("Posição fora do tabuleiro")
 
@@ -53,13 +61,19 @@ class Game:
         if target not in movements:
             raise InvalidMovement("Jogada inválida")
 
-    def get_winner(self):
-        return self._winner
+    def _evaluate_promotion(self, piece):
+        if not isinstance(piece, Padati):
+            return
 
-    def evaluate_promotion(self, piece):
-        NotImplemented
+        color = piece.get_color()
+        pos = piece.get_position()
+        row = pos.get_row()
 
-    def evaluate_winning_condition(self):
+        if (color == Color.WHITE and row == 0) or (color == Color.BLACK and row == 7):
+            new_piece = Mitri(color)
+            pos.set_piece(new_piece)
+
+    def _evaluate_winning_condition(self):
         self._check_kings_death()
         self._check_army_decimated()
 
@@ -68,26 +82,32 @@ class Game:
             square for square in self.board if isinstance(square.get_piece(), Raja)
         ]
 
-        if len(rajas) == 2:
-            return
+        if len(rajas) == 1:
+            self._match_finished = True
+            self._winner = rajas[0].get_piece().color
 
-        self._match_finished = True
-        self._winner = rajas[0].get_piece().color
-
-    def _check_army_decimated(self):
-        def _has_white(square):
-            return square.has_piece() and square.piece.color == Color.WHITE
-
+    def get_black_pieces(self):
         def _has_black(square):
             return square.has_piece() and square.piece.color == Color.BLACK
 
-        black_pieces = list(filter(_has_black, self.board))
-        white_pieces = list(filter(_has_white, self.board))
+        return list(filter(_has_black, self.board))
+
+    def get_white_pieces(self):
+        def _has_white(square):
+            return square.has_piece() and square.piece.color == Color.WHITE
+
+        return list(filter(_has_white, self.board))
+
+    def set_winner(self, color):
+        self._match_finished = True
+        self._winner = color
+
+    def _check_army_decimated(self):
+        black_pieces = self.get_black_pieces()
+        white_pieces = self.get_white_pieces()
 
         if len(black_pieces) <= 1:
-            self._match_finished = True
-            self._winner = Color.WHITE
+            self.set_winner(Color.WHITE)
 
         if len(white_pieces) <= 1:
-            self._match_finished = True
-            self._winner = Color.BLACK
+            self.set_winner(Color.BLACK)

@@ -43,9 +43,7 @@ class BoardWidget(QWidget):
         super().__init__(parent)
         self.setMinimumSize(500, 500)
         self.setMaximumSize(500, 500)
-
         self.board = self.parent().game.board
-        self.last_piece = None
 
         self._load_imgs()
         self._create_main_grid()
@@ -151,29 +149,25 @@ class BoardWidget(QWidget):
                 self._set_piece(square.row, square.col, "empty")
                 continue
 
-            piece = square.piece
+            piece = square.get_piece()
             piece_prefix = "white_" if piece.color == Color.WHITE else "black_"
 
             if isinstance(piece, Ashwa):
                 piece_name = piece_prefix + "ashwa"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Gaja):
                 piece_name = piece_prefix + "gaja"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Mitri):
                 piece_name = piece_prefix + "mitri"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Padati):
                 piece_name = piece_prefix + "padati"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Raja):
                 piece_name = piece_prefix + "raja"
-                self._set_piece(square.row, square.col, piece_name)
 
             elif isinstance(piece, Ratha):
                 piece_name = piece_prefix + "ratha"
-                self._set_piece(square.row, square.col, piece_name)
+
+            self._set_piece(square.row, square.col, piece_name)

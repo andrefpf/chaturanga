@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QMessageBox,
 )
+import sys
 from PyQt5.QtCore import Qt
 from chaturanga.ui.board_widget import BoardWidget
 from chaturanga.game import Game
@@ -43,6 +44,7 @@ class GameWidget(QWidget):
         layout.setAlignment(Qt.AlignCenter)
 
         self.setLayout(layout)
+        self.board_widget.update_board()  # To start with the sizes corrected
         self.set_visualization_player_color(Color.WHITE)
         self.show()
 
@@ -52,12 +54,15 @@ class GameWidget(QWidget):
         else:
             self.player_label.setText("JOGAM AS PRETAS.")
 
+    def clear_info_text(self):
+        self.info_label.setText("")
+
     def restart_game(self):
         self.game.restart_game()
         self.last_piece = None
         self.board_widget.clear_highlights()
         self.board_widget.update_board()
-        self.info_label.setText("")
+        self.clear_info_text()
 
     def square_clicked_callback(self, row, col):
         clicked_square = self.game.board.get_square(row, col)
@@ -67,28 +72,33 @@ class GameWidget(QWidget):
         else:
             self.move_choosen_piece(clicked_square)
 
+    def set_last_piece(self, piece):
+        self.last_piece = piece
+
     def choose_piece(self, target):
         if target.piece is None:
-            self.info_label.setText("")
+            self.clear_info_text()
             return
 
         if target.piece.color != self.game.current_color():
             self.info_label.setText("Escolha uma peça da sua cor")
             return
 
-        self.last_piece = target.piece
+        self.set_last_piece(target.piece)
         self.board_widget.clear_highlights()
         self.board_widget.highlight_square_red(target.row, target.col)
         self.board_widget.highlight_movements(target.row, target.col)
-        self.info_label.setText("")
+        self.clear_info_text()
+
+    def clear_last_piece(self):
+        self.last_piece = None
 
     def move_choosen_piece(self, target):
         origin = self.last_piece.position
+        self.clear_info_text()
 
         try:
-            origin = self.last_piece.position
             self.game.make_movement(origin, target)
-            self.info_label.setText("")
 
         except InvalidMovement as error:
             self.info_label.setText(str(error))
@@ -96,7 +106,7 @@ class GameWidget(QWidget):
         except InvalidPosition as error:
             self.info_label.setText(str(error))
 
-        self.last_piece = None
+        self.clear_last_piece()
         self.board_widget.clear_highlights()
         self.board_widget.update_board()
 
@@ -108,20 +118,22 @@ class GameWidget(QWidget):
 
     def show_winner(self):
         msg = QMessageBox()
-        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.addButton("Sim", QMessageBox.YesRole)
+        msg.addButton("Não", QMessageBox.NoRole)
 
-        if self.game.get_winner() == Color.WHITE:
+        winner = self.game.get_winner()
+        if winner == Color.WHITE:
             msg.setText("VITÓRIA DAS BRANCAS!")
-        elif self.game.get_winner() == Color.BLACK:
+        elif winner == Color.BLACK:
             msg.setText("VITÓRIA DAS PRETAS!")
         else:
             return
 
         msg.setInformativeText("Deseja iniciar uma nova partida?")
         msg.setWindowTitle("Vitória!")
-        ret = msg.exec()
+        should_exit = msg.exec()
 
-        if ret == QMessageBox.Yes:
-            self.restart_game()
+        if should_exit:
+            sys.exit()
         else:
-            exit()
+            self.restart_game()
