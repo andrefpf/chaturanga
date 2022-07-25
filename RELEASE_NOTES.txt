@@ -1,0 +1,12 @@
+Para executar o jogo recomendamos o gerenciador de pacotes Poetry. 
+Poetry proporciona um ambiente virtual que vai evitar problemas de instalação 
+de pacotes e facilitará a publicação do jogo no repositório do PiPy
+
+Primeiro você deve instalar o Poetry através do comando:
+    pip install poetry
+
+Então, na pasta do projeto instale as dependências com:
+    poetry install
+
+E para executar, utilize o comando:
+    poetry run python chaturanga

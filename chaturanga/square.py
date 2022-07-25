@@ -6,7 +6,7 @@ class Square:
 
     def get_row(self):
         return self.row
-    
+
     def get_col(self):
         return self.col
 

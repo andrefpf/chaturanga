@@ -64,7 +64,7 @@ class Game:
     def _evaluate_promotion(self, piece):
         if not isinstance(piece, Padati):
             return
-        
+
         color = piece.get_color()
         pos = piece.get_position()
         row = pos.get_row()
@@ -89,11 +89,13 @@ class Game:
     def get_black_pieces(self):
         def _has_black(square):
             return square.has_piece() and square.piece.color == Color.BLACK
+
         return list(filter(_has_black, self.board))
 
     def get_white_pieces(self):
         def _has_white(square):
             return square.has_piece() and square.piece.color == Color.WHITE
+
         return list(filter(_has_white, self.board))
 
     def set_winner(self, color):
